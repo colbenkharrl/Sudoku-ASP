@@ -6,6 +6,7 @@ public class SudokuASP {
 		
 		WholeFrame frame = new WholeFrame();
 		frame.setTitle("Sudoku-ASP");
+		frame.setResizable(false);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setVisible(true);
 	}
