@@ -23,7 +23,7 @@ public class WholeFrame extends JFrame {
 	
 //- - - CONSTRUCTOR - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	public WholeFrame() {
-		FRAME_WIDTH = 1000;
+		FRAME_WIDTH = 1100;
 		FRAME_HEIGHT = 1000;
 		state = 's';
 		n = 9;
@@ -65,7 +65,7 @@ public class WholeFrame extends JFrame {
 			}
 			prompt.setFont(new Font("Monospaced", 1, 18));
 			prompt.setHorizontalAlignment(JLabel.CENTER);
-			prompt.setPreferredSize(new Dimension(650, 50));
+			prompt.setPreferredSize(new Dimension(700, 50));
 			gridPanel = gridPanel(size);
 			ActionListener actionListener = new bListener();
 			buttonScreen = new JPanel(new GridLayout(2, 1));
@@ -77,7 +77,7 @@ public class WholeFrame extends JFrame {
 			fileB = new JTButton("MVSM File", actionListener, 'b');
 			buttonScreen.add(actionB);
 			buttonScreen.add(fileB);
-			gridPanel.setPreferredSize(new Dimension(650, 650));
+			gridPanel.setPreferredSize(new Dimension(700, 700));
 			returnPanel.add(prompt, BorderLayout.NORTH);
 			returnPanel.add(gridPanel, BorderLayout.CENTER);
 			returnPanel.add(buttonScreen, BorderLayout.EAST);
@@ -92,7 +92,7 @@ public class WholeFrame extends JFrame {
 					+ " and translates the results into a relatable puzzle, Sudoku.\n\nAnswer Set Programming\n\nAnswer"
 					+ " set programming (ASP) is a form of declarative programming oriented towards difficult search problems."
 					+ " It is based on the stable model semantics of logic programming. In ASP, search problems are reduced"
-					+ " to computing stable models, and answer set solvers â€” programs for generating stable modelsâ€”are used to"
+					+ " to computing stable models, and answer set solvers — programs for generating stable models—are used to"
 					+ " perform search.\n\nMVSM\n\nSystem MVSM is a prototype implementation multi-valued propositional formulas"
 					+ " under the stable model semantics computed by grounder and solver gringo and claspD. This reduction is"
 					+ " based on the intensional function elimination theorem in Bartholomew & Lee 2012. The system is a toolchain"
@@ -176,7 +176,7 @@ public class WholeFrame extends JFrame {
 				text.setEditable(true);
 				text.setLineWrap(true);
 				text.setWrapStyleWord(true);
-				text.setPreferredSize(new Dimension(650, 650));
+				text.setPreferredSize(new Dimension(700, 700));
 				text.setBackground(Color.black);
 				text.setForeground(Color.white);
 				pane = new JScrollPane(text);
@@ -198,7 +198,7 @@ public class WholeFrame extends JFrame {
 				text.setEditable(true);
 				text.setLineWrap(true);
 				text.setWrapStyleWord(true);
-				text.setPreferredSize(new Dimension(650, 650));
+				text.setPreferredSize(new Dimension(700, 700));
 				text.setBackground(Color.black);
 				text.setForeground(Color.white);
 				pane = new JScrollPane(text);
@@ -240,7 +240,7 @@ public class WholeFrame extends JFrame {
 				text.setEditable(false);
 				text.setLineWrap(true);
 				text.setWrapStyleWord(true);
-				text.setPreferredSize(new Dimension(650, 650));
+				text.setPreferredSize(new Dimension(700, 700));
 				text.setBackground(Color.black);
 				text.setForeground(Color.white);
 				pane = new JScrollPane(text);
@@ -352,7 +352,7 @@ public class WholeFrame extends JFrame {
 			int number = Integer.parseInt(((JButton) event.getSource()).getLabel());
 			if (number != n) {
 				number++;
-				((JTButton) event.getSource()).setColor(Color.BLACK, Color.BLACK);
+				((JTButton) event.getSource()).setColor(Color.WHITE, Color.BLACK);
 			} else {
 				number = 0;
 				((JTButton) event.getSource()).setColor(Color.BLACK, Color.WHITE);
@@ -361,6 +361,4 @@ public class WholeFrame extends JFrame {
 			((JButton) event.getSource()).setLabel(Integer.toString(number));
 		}
 	}
-	
-//- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -  - - - - - - - - -
 }
