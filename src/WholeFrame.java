@@ -13,6 +13,7 @@ public class WholeFrame extends JFrame {
 	private JPanel naviBar, contentPane, gridFooter, gridPanel, buttonScreen;
 	private JButton solveB, createB, infoB, actionB, fileB;
 	private JTButton[] gridBs;
+	private JScrollPane pane;
 	private JTextArea text;
 	private JLabel prompt;
 	private char state;
@@ -22,8 +23,8 @@ public class WholeFrame extends JFrame {
 	
 //- - - CONSTRUCTOR - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 	public WholeFrame() {
-		FRAME_WIDTH = 800;
-		FRAME_HEIGHT = 800;
+		FRAME_WIDTH = 1000;
+		FRAME_HEIGHT = 1000;
 		state = 's';
 		n = 9;
 		viewingText = false;
@@ -64,7 +65,7 @@ public class WholeFrame extends JFrame {
 			}
 			prompt.setFont(new Font("Monospaced", 1, 18));
 			prompt.setHorizontalAlignment(JLabel.CENTER);
-			prompt.setPreferredSize(new Dimension(700, 50));
+			prompt.setPreferredSize(new Dimension(650, 50));
 			gridPanel = gridPanel(size);
 			ActionListener actionListener = new bListener();
 			buttonScreen = new JPanel(new GridLayout(2, 1));
@@ -76,7 +77,7 @@ public class WholeFrame extends JFrame {
 			fileB = new JTButton("MVSM File", actionListener, 'b');
 			buttonScreen.add(actionB);
 			buttonScreen.add(fileB);
-			gridPanel.setPreferredSize(new Dimension(600, 600));
+			gridPanel.setPreferredSize(new Dimension(650, 650));
 			returnPanel.add(prompt, BorderLayout.NORTH);
 			returnPanel.add(gridPanel, BorderLayout.CENTER);
 			returnPanel.add(buttonScreen, BorderLayout.EAST);
@@ -163,7 +164,7 @@ public class WholeFrame extends JFrame {
 				break;
 			case "Solve!":
 				if (viewingText) {
-					contentPane.remove(text);
+					contentPane.remove(pane);
 					fileB.setLabel("MVSM File");
 				} else {
 					contentPane.remove(gridPanel);
@@ -175,17 +176,18 @@ public class WholeFrame extends JFrame {
 				text.setEditable(true);
 				text.setLineWrap(true);
 				text.setWrapStyleWord(true);
-				text.setPreferredSize(new Dimension(600, 600));
+				text.setPreferredSize(new Dimension(650, 650));
 				text.setBackground(Color.black);
 				text.setForeground(Color.white);
+				pane = new JScrollPane(text);
 				((JButton) event.getSource()).setLabel("Update");
-				contentPane.add(text, BorderLayout.CENTER);
+				contentPane.add(pane, BorderLayout.CENTER);
 				contentPane.add(buttonScreen, BorderLayout.EAST);
 				viewingText = true;
 				break;
 			case "Create!":
 				if (viewingText) {
-					contentPane.remove(text);
+					contentPane.remove(pane);
 					fileB.setLabel("MVSM File");
 				} else {
 					contentPane.remove(gridPanel);
@@ -196,11 +198,12 @@ public class WholeFrame extends JFrame {
 				text.setEditable(true);
 				text.setLineWrap(true);
 				text.setWrapStyleWord(true);
-				text.setPreferredSize(new Dimension(600, 600));
+				text.setPreferredSize(new Dimension(650, 650));
 				text.setBackground(Color.black);
 				text.setForeground(Color.white);
+				pane = new JScrollPane(text);
 				((JButton) event.getSource()).setLabel("Update");
-				contentPane.add(text, BorderLayout.CENTER);
+				contentPane.add(pane, BorderLayout.CENTER);
 				contentPane.add(buttonScreen, BorderLayout.EAST);
 				viewingText = true;
 				break;
@@ -208,7 +211,7 @@ public class WholeFrame extends JFrame {
 				String output = text.getText();
 				fillBoard(output);
 				System.out.println(output);
-				contentPane.remove(text);
+				contentPane.remove(pane);
 				contentPane.remove(buttonScreen);
 				if (state == 's') {
 					((JButton) event.getSource()).setLabel("Solve!");
@@ -221,7 +224,7 @@ public class WholeFrame extends JFrame {
 				break;
 			case "MVSM File":
 				if (viewingText) {
-					contentPane.remove(text);
+					contentPane.remove(pane);
 					if (state == 's') {
 						actionB.setLabel("Solve!");
 					} else {
@@ -237,16 +240,18 @@ public class WholeFrame extends JFrame {
 				text.setEditable(false);
 				text.setLineWrap(true);
 				text.setWrapStyleWord(true);
-				text.setPreferredSize(new Dimension(600, 600));
+				text.setPreferredSize(new Dimension(650, 650));
 				text.setBackground(Color.black);
 				text.setForeground(Color.white);
+				pane = new JScrollPane(text);
+				pane.createVerticalScrollBar();
 				((JButton) event.getSource()).setLabel("Return");
-				contentPane.add(text, BorderLayout.CENTER);
+				contentPane.add(pane, BorderLayout.CENTER);
 				contentPane.add(buttonScreen, BorderLayout.EAST);
 				viewingText = true;
 				break;
 			case "Return":
-				contentPane.remove(text);
+				contentPane.remove(pane);
 				contentPane.remove(buttonScreen);
 				((JButton) event.getSource()).setLabel("MVSM File");
 				contentPane.add(gridPanel, BorderLayout.CENTER);
@@ -282,29 +287,42 @@ public class WholeFrame extends JFrame {
 		}
 		
 		private String MVSMFile(int size) {
-			String header;
-			if (n != 6) {
-				header = " :- sorts\n num.\n\n :- objects\n 1.." + n + "\t:: num.\n\n :- variables\n\tR, R1, C, C1, N :: num.\n\n"
-						+ " :- constants\n\t a(num,num)\t:: num.\n\n {a(R,C)=N}.\n\n <- a(R,C)=N & a(R1,C)=N & R!=R1.\n"
-						+ " <- a(R,C)=N & a(R,C1)=N & C!=C1.\n <- a(R,C)=N & a(R1,C1)=N & R!=R1 & C!=C1 & ((R-1)/" + (int) Math.sqrt(n) 
-						+ "*" + (int) Math.sqrt(n) + " + (C-1)/" + (int) Math.sqrt(n) + ") == ((R1-1)/" + (int) Math.sqrt(n) + "*" 
-						+ (int) Math.sqrt(n) + " + (C1-1)/" + (int) Math.sqrt(n) + ").\n\n";
-			} else {
-				header = " :- sorts\n num.\n\n :- objects\n 1..6\t:: num.\n\n :- variables\n\tR, R1, C, C1, N :: num.\n\n :- constants\n"
-						+ "\ta(num,num):: num.\n\n {a(R,C)=N}.\n\n <- a(R,C)=N & a(R1,C)=N & R!=R1.\n <- a(R,C)=N & a(R,C1)=N & C!=C1.\n"
-						+ " <- a(R,C)=N & a(R1,C1)=N & R!=R1 & C!=C1 & ((R-1)/2*2 + (C-1)/3) == ((R1-1)/2*2 + (C1-1)/3).\n\n";
-			}
-			String constraints = "";
-			for (int i = 0; i < Math.pow(n, 2); i++) {
-				if (Integer.parseInt(gridBs[i].getLabel()) != 0) {
-					if ((i+1) % n == 0) {
-						constraints += " a(" + ((i)/n + 1) + "," + n + ")=" + gridBs[i].getLabel() + ".";
-					} else {
-						constraints += " a(" + ((i+1)/n + 1) + "," + (i+1) % n + ")=" + gridBs[i].getLabel() + ".";
+			if (state == 's') {
+				String header;
+				if (n != 6) {
+					header = " :- sorts\n num.\n\n :- objects\n 1.." + n + "\t:: num.\n\n :- variables\n\tR, R1, C, C1, N :: num.\n\n"
+							+ " :- constants\n\t a(num,num)\t:: num.\n\n % Set defualt value for cells\n{a(R,C)=N}.\n\n % Two of the same number cannot share a column\n <- a(R,C)=N & a(R1,C)=N & R!=R1.\n\n"
+							+ " % Two of the same number cannot share a row\n <- a(R,C)=N & a(R,C1)=N & C!=C1.\n\n % Two of the same number cannot be in the same subsquare\n <- a(R,C)=N & a(R1,C1)=N & R!=R1 & C!=C1 & ((R-1)/" + (int) Math.sqrt(n) 
+							+ "*" + (int) Math.sqrt(n) + " + (C-1)/" + (int) Math.sqrt(n) + ") == ((R1-1)/" + (int) Math.sqrt(n) + "*" 
+							+ (int) Math.sqrt(n) + " + (C1-1)/" + (int) Math.sqrt(n) + ").\n\n";
+				} else {
+					header = " :- sorts\n num.\n\n :- objects\n 1..6\t:: num.\n\n :- variables\n\tR, R1, C, C1, N :: num.\n\n :- constants\n"
+							+ "\ta(num,num):: num.\n\n {a(R,C)=N}.\n\n <- a(R,C)=N & a(R1,C)=N & R!=R1.\n <- a(R,C)=N & a(R,C1)=N & C!=C1.\n"
+							+ " <- a(R,C)=N & a(R1,C1)=N & R!=R1 & C!=C1 & ((R-1)/2*2 + (C-1)/3) == ((R1-1)/2*2 + (C1-1)/3).\n\n";
+				}
+				String constraints = "";
+				for (int i = 0; i < Math.pow(n, 2); i++) {
+					if (Integer.parseInt(gridBs[i].getLabel()) != 0) {
+						if ((i+1) % n == 0) {
+							constraints += " a(" + ((i)/n + 1) + "," + n + ")=" + gridBs[i].getLabel() + ".";
+						} else {
+							constraints += " a(" + ((i+1)/n + 1) + "," + (i+1) % n + ")=" + gridBs[i].getLabel() + ".";
+						}
 					}
 				}
+				return header + constraints;
 			}
-			return header + constraints;
+			else {
+				return " :- sorts\n num;\n step;\n astep.\n\n :- objects\n 1..9\t:: num;\n 0..9\t:: digit;\n 0..36\t:: step;\n 0..35\t:: astep."
+						+ "\n\n :- variables\n R,R1,C,C1,R\t:: num;\n Bool\t:: boolean;\n N, N1\t:: digit;\n ST\t:: step;\n T\t:: astep.\n\n"
+						+ " :- constants\n value(num,num,step)\t:: digit;\n set(num,num,num,astep)\t:: boolean.\n\n % Set default values\n"
+						+ " {value(R,C,0)=0}.\n {set(R,C,N,T)=Bool}.\n\n % A block cannot have more than one value \n <- value(R,C,T)=N &"
+						+ " value(R,C,T)=N1 & N!=N1.\n\n % Effect of setting a cell\n value(R,C,T+1)=N <- set(R,C,N,T) & N!=0.\n\n % A cell"
+						+ " can only be set if it has yet to be set\n <- set(R,C,N,T) & value(R,C,T)!=0.\n\n % Law of inertia\n {value(R,C,T+1)=N}"
+						+ " <- value(R,C,T)=N.\n\n % Sudoku rules\n <- a(R,C)=N & a(R1,C)=N & R!=R1.\n <- a(R,C)=N & a(R,C1)=N & C!=C1.\n <- a(R,C)=N"
+						+ " & a(R1,C1)=N & R!=R1 & C!=C1 & ((R-1)/3*3 + (C-1)/3) == ((R1-1)/3*3 + (C1-1)/3).";
+			}
+			
 		}
 		
 		private void fillBoard(String output) {
