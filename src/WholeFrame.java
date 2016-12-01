@@ -92,7 +92,7 @@ public class WholeFrame extends JFrame {
 					+ " and translates the results into a relatable puzzle, Sudoku.\n\nAnswer Set Programming\n\nAnswer"
 					+ " set programming (ASP) is a form of declarative programming oriented towards difficult search problems."
 					+ " It is based on the stable model semantics of logic programming. In ASP, search problems are reduced"
-					+ " to computing stable models, and answer set solvers — programs for generating stable models—are used to"
+					+ " to computing stable models, and answer set solvers â€” programs for generating stable modelsâ€”are used to"
 					+ " perform search.\n\nMVSM\n\nSystem MVSM is a prototype implementation multi-valued propositional formulas"
 					+ " under the stable model semantics computed by grounder and solver gringo and claspD. This reduction is"
 					+ " based on the intensional function elimination theorem in Bartholomew & Lee 2012. The system is a toolchain"
@@ -340,6 +340,7 @@ public class WholeFrame extends JFrame {
 				inc++;
 				gridBs[i].setLabel(Character.toString(line.charAt(inc)));
 				gridBs[i].setBackground(Color.green);
+				gridBs[i].setForeground(Color.black);
 				i++;
 			}
 		}
