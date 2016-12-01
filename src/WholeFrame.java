@@ -225,7 +225,7 @@ public class WholeFrame extends JFrame {
 					if (state == 's') {
 						actionB.setLabel("Solve!");
 					} else {
-						actionB.setLabel("Solve!");
+						actionB.setLabel("Create!");
 					}
 				} else {
 					contentPane.remove(gridPanel);
